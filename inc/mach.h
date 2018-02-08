@@ -22,6 +22,18 @@
 #define MACH_H
 
 
+#define MAX_PEERS 100 ///< The maximum number of peers a participant can have.
+
+
+////////////////////////////////////////////////////////////////////////////////
+/// A peer is a reference to another Network Participant.
+////////////////////////////////////////////////////////////////////////////////
+typedef struct
+{
+    uint8_t latency;    ///< The latency or ping of the peer in ms.
+    // TODO.
+} mach_peer_t;
+
 ////////////////////////////////////////////////////////////////////////////////
 /// A Network Participant Struct represents a participant of a given mach
 /// network.
