@@ -20,3 +20,7 @@ MACH is an Adhoc Network solution for multiplayer gaming which replaces the typi
 Client <-> Server Model with a scalable Peer <-> Peer Mesh Network.
 
 ![mach-demo](https://github.com/tsteinholz/MACH/raw/master/img/MACH-demo.png)
+
+## Getting Started
+TODO
+
