@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////
+//============================================================================//
 //                 ___           ___           ___           ___              //
 //                /__/\         /  /\         /  /\         /__/\             //
 //               |  |::\       /  /::\       /  /:/         \  \:\            //
@@ -16,14 +16,70 @@
 //                                                                            //
 //                      Reference LICENSE.md for licensing.                   //
 //                                                                            //
-////////////////////////////////////////////////////////////////////////////////
+//============================================================================//
+
+//----------------------------------------------------------------------------//
+// || PREPROCESSORS ||||||||||||||||||||||||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
 
 #ifdef MACH_H
 #define MACH_H
 
 
-#define MAX_PEERS 100 ///< The maximum number of peers a participant can have.
+//----------------------------------------------------------------------------//
+// || CONFIGURATION ||||||||||||||||||||||||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
 
+////////////////////////////////////////////////////////////////////////////////
+/// Set the Log Level of the MACH Networking Library.
+///
+/// 0: LOG OFF
+/// 1: ERRORS
+/// 2: INFO
+/// 3: WARNINGS
+/// 4: DEBUG
+/// 5: TRACE
+////////////////////////////////////////////////////////////////////////////////
+#define MACH_LOG_LEVEL (1)
+
+////////////////////////////////////////////////////////////////////////////////
+/// Set where the logs should go to.
+///
+/// 0: STDOUT
+/// 1: FILE
+/// 2: BOTH
+////////////////////////////////////////////////////////////////////////////////
+#if MACH_LOG_LEVEL
+#define MACH_LOG_DEST  (0)
+#endif //MACH_LOG_LEVEL
+
+#ifdef __cplusplus
+extern "C" {
+#endif //__cplusplus
+
+
+//----------------------------------------------------------------------------//
+// || CONSTANTS ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
+
+#define MACH_VER_MAJOR (0)   ///< MACH Major Version Number
+#define MACH_VER_MINOR (0)   ///< MACH Minor Version Number
+#define MACH_VER_TAG   (1)   ///< MACH Tag Version Number
+#define MACH_MAX_PEERS (100) ///< The maximum number of peers a node can have.
+
+
+//----------------------------------------------------------------------------//
+// || TYPEDEF ENUM AND STRUCT DEFINITIONS ||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
+/// The possible return types of MACH functions.
+////////////////////////////////////////////////////////////////////////////////
+typedef enum
+{
+    MACH_RET_OK = 0,          ///< No Error; Everything is OK.
+    MACH_NODE_NOT_FOUND = 1,  ///< Could not find the requested participant.
+} mach_ret_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// A peer is a reference to another Network Participant.
@@ -42,19 +98,55 @@ typedef struct
 {
     uint64_t network_id; ///< The ID of a given MACH Network.
     // TODO.
-} mach_participant_t;
+} mach_node_t;
+
+
+//----------------------------------------------------------------------------//
+// || PUBLIC FUNCTION PROTOTYPES |||||||||||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
 
 ////////////////////////////////////////////////////////////////////////////////
-/// A Network Peer represents one of the peers the Network Participant would be
-/// connected to. Packets are relaye to and from the Network Participant's
-/// peers.
+/// Initializes the MACH Node.
+///
+/// TODO: More details.
+///
+/// TODO: parameters.
+///
+/// TODO: return.
 ////////////////////////////////////////////////////////////////////////////////
-typedef struct
-{
-    uint16_t latency; ///< The Ping latency of a given peer.
-    // TODO.
-} mach_peer_t;
+mach_ret_t mach_init();
 
-// TODO.
+////////////////////////////////////////////////////////////////////////////////
+/// Updates the MACH Node.
+///
+/// TODO: More details.
+///
+/// TODO: parameters.
+///
+/// TODO: return.
+////////////////////////////////////////////////////////////////////////////////
+mach_ret_t mach_update_network();
+
+////////////////////////////////////////////////////////////////////////////////
+/// Pings a given Network Participant.
+///
+/// Will verify that the node is reachable and determine the network latency to
+/// that given participant.
+///
+/// param[in] node_id The ID of the participant to the ping.
+/// param[out] ping The network latency between the two end nodes in ms.
+///
+/// return MACH_OK, Success; MACH_NODE_NOT_FOUND, Unknown Participant ID;
+////////////////////////////////////////////////////////////////////////////////
+mach_ret_t mach_ping_node(uint64_t node_id, int8_t *ping);
+
+
+//----------------------------------------------------------------------------//
+// || PREPROCESSORS ||||||||||||||||||||||||||||||||||||||||||||||||||||||||| //
+//----------------------------------------------------------------------------//
+
+#ifdef __cplusplus
+}
+#endif //__cplusplus
 
 #endif //MACH_H
